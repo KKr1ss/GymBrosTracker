@@ -17,6 +17,11 @@ namespace GymBrosTracker.UI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+    //        Log.Logger = new LoggerConfiguration()
+    //.WriteTo.SQLite(Domain.Helpers.Constants.DBPath)
+    //.CreateLogger();
+
+
             builder.RegisterServices();
             builder.RegisterViewModels();
             builder.RegisterViews();

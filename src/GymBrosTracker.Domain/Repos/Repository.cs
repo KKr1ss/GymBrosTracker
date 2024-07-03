@@ -13,7 +13,6 @@ namespace GymBrosTracker.Domain.Repos
         public async Task SaveChangesAsync()
         {
             await _context.SaveChangesAsync();
-            _context.ChangeTracker.Clear();
         }
 
         public async Task AddMuscleGroup(string name)
@@ -36,7 +35,7 @@ namespace GymBrosTracker.Domain.Repos
         {
             if (muscleIds != null)
                 return await _context.MuscleGroups.Where(e => muscleIds.Contains(e.Id)).ToListAsync();
-            return await _context.MuscleGroups.ToListAsync();
+            return await _context.MuscleGroups.Include(x=>x.Exercises).ToListAsync();
         }
 
         public async Task AddExercise(Exercise exercise)
@@ -60,7 +59,7 @@ namespace GymBrosTracker.Domain.Repos
         {
             if (muscleIds != null)
                 return await _context.Exercises.Where(e => muscleIds.Contains(e.Id)).ToListAsync();
-            return await _context.Exercises.ToListAsync();
+            return await _context.Exercises.Include(x=>x.MuscleGroups).ToListAsync();
         }
     }
 }

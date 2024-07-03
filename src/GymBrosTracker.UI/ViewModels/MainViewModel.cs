@@ -26,6 +26,7 @@ namespace GymBrosTracker.UI.ViewModels
 
                 var exercises = await _repo.GetExercises();
                 Exercises = new ObservableCollection<Exercise>(exercises);
+                var muscleGroups = await _repo.GetMuscleGroups();
             }
             catch (Exception ex)
             {
