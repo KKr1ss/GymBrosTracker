@@ -1,6 +1,9 @@
 ﻿using GymBrosTracker.Domain;
 using GymBrosTracker.UI.ViewModels;
 using Microsoft.Extensions.Logging;
+using Serilog;
+using Serilog.Core;
+using Serilog.Exceptions;
 
 namespace GymBrosTracker.UI
 {
@@ -17,18 +20,24 @@ namespace GymBrosTracker.UI
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
-    //        Log.Logger = new LoggerConfiguration()
-    //.WriteTo.SQLite(Domain.Helpers.Constants.DBPath)
-    //.CreateLogger();
-
+            builder.Logging.ClearProviders();
+            Log.Logger = new LoggerConfiguration()
+                .Enrich.WithExceptionDetails()
+                .Enrich.FromLogContext()
+                .WriteTo.SQLite(Domain.Helpers.Constants.DBPath)
+                .CreateLogger();
+            builder.Services.AddLogging(logging =>
+            {
+                logging.AddSerilog(dispose: true);
+            });
 
             builder.RegisterServices();
             builder.RegisterViewModels();
             builder.RegisterViews();
-
-#if DEBUG
-            builder.Logging.AddDebug();
-#endif
+//#if DEBUG
+//            builder.Logging.AddDebug();
+//#endif
+            Log.Logger.Information("Application has been started!");
             return builder.Build();
         }
 

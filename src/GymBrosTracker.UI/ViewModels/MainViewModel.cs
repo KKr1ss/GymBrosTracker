@@ -2,6 +2,7 @@
 using GymBrosTracker.Domain.Models.Entity;
 using GymBrosTracker.Domain.Repos.Interface;
 using GymBrosTracker.UI.ViewModels.Base;
+using Microsoft.Extensions.Logging;
 using System.Collections.ObjectModel;
 
 namespace GymBrosTracker.UI.ViewModels
@@ -9,13 +10,15 @@ namespace GymBrosTracker.UI.ViewModels
     public class MainViewModel : ViewModelBase
     {
         private readonly IRepository _repo;
+        private readonly ILogger<MainViewModel> _logger;
 
         public ObservableCollection<Exercise> Exercises { get; set; } = [];
 
-        public MainViewModel(IRepository repo)
+        public MainViewModel(IRepository repo, ILogger<MainViewModel> logger)
         {
             _repo = repo;
-            LoadDataAsync();
+            _logger = logger;
+            Task.Run(async () => await LoadDataAsync());
         }
 
         private async Task LoadDataAsync()
@@ -30,10 +33,8 @@ namespace GymBrosTracker.UI.ViewModels
             }
             catch (Exception ex)
             {
-                throw;
+                _logger.LogError(ex, "ERROR: ");
             }
-            
-            
         }
     }
 }

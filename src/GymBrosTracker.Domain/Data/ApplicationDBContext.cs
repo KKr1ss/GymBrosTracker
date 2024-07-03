@@ -19,19 +19,11 @@ namespace GymBrosTracker.Domain.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            try
-            {
-                if (optionsBuilder.IsConfigured)
-                    return;
-                string dbPath = Constants.DBPath;
-                optionsBuilder.UseSqlite($"Filename={dbPath}");
-                optionsBuilder.EnableSensitiveDataLogging();
-            }
-            catch (Exception ex)
-            {
-                throw;
-            }
-
+            if (optionsBuilder.IsConfigured)
+                return;
+            string dbPath = Constants.DBPath;
+            optionsBuilder.UseSqlite($"Filename={dbPath}");
+            optionsBuilder.EnableSensitiveDataLogging();
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
