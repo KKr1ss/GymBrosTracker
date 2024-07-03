@@ -9,5 +9,7 @@ namespace GymBrosTracker.Domain.Data.Interface
         public DbSet<Image> Images { get; set; }
         public DbSet<MuscleGroup> MuscleGroups { get; set; }
         public DbSet<Workout> Workouts { get; set; }
+
+        public Task SaveChangesAsync();
     }
 }

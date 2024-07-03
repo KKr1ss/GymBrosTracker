@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using GymBrosTracker.Domain;
+﻿using GymBrosTracker.Domain;
 using GymBrosTracker.UI.ViewModels;
-using GymBrosTracker.Domain.Repos.Interface;
-using GymBrosTracker.Domain.Repos;
+using Microsoft.Extensions.Logging;
 
 namespace GymBrosTracker.UI
 {

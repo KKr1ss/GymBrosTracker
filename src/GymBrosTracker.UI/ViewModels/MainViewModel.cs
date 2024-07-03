@@ -14,12 +14,22 @@ namespace GymBrosTracker.UI.ViewModels
         public MainViewModel(IGymRepo gymRepo)
         {
             _gymRepo = gymRepo;
-            Task.Run(async () => await LoadDataAsync());
+            LoadDataAsync();
         }
 
         private async Task LoadDataAsync()
         {
-            Exercises = new ObservableCollection<Exercise>(await _gymRepo.GetExercises());
+            try
+            {
+                var exercises = await _gymRepo.GetExercises();
+                Exercises = new ObservableCollection<Exercise>(exercises);
+            }
+            catch (Exception ex)
+            {
+                throw;
+            }
+            
+            
         }
     }
 }

@@ -10,9 +10,9 @@ namespace GymBrosTracker.Domain
     {
         public static IServiceCollection AddDomain(this IServiceCollection services)
         {
-            services.AddSingleton<IAppDBContext, AppDBContext>();
-            services.AddSingleton<IGymRepo, GymRepo>();
-            
+            services.AddSingleton<AppDBContext>();
+            services.AddTransient<IGymRepo, GymRepo>();
+
             return services;
         }
     }
