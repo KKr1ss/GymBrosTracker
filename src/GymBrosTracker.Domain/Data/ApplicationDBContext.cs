@@ -4,14 +4,14 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymBrosTracker.Domain.Data
 {
-    public class AppDBContext : DbContext
+    public class ApplicationDBContext : DbContext
     {
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<MuscleGroup> MuscleGroups { get; set; }
         public DbSet<Workout> Workouts { get; set; }
 
-        public AppDBContext()
+        public ApplicationDBContext()
         {
             SQLitePCL.Batteries_V2.Init();
             Database.EnsureCreated();
@@ -25,10 +25,10 @@ namespace GymBrosTracker.Domain.Data
                     return;
                 string dbPath = Constants.DBPath;
                 optionsBuilder.UseSqlite($"Filename={dbPath}");
+                optionsBuilder.EnableSensitiveDataLogging();
             }
             catch (Exception ex)
             {
-
                 throw;
             }
 
@@ -42,6 +42,18 @@ namespace GymBrosTracker.Domain.Data
                 .UsingEntity("Exercise_MuscleGroup");
 
             modelBuilder.Entity<MuscleGroup>().Property(o => o.RowVersion)
+                    .IsRowVersion()
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Exercise>().Property(o => o.RowVersion)
+                    .IsRowVersion()
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Image>().Property(o => o.RowVersion)
+                    .IsRowVersion()
+            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+
+            modelBuilder.Entity<Workout>().Property(o => o.RowVersion)
                     .IsRowVersion()
             .HasDefaultValueSql("CURRENT_TIMESTAMP");
         }

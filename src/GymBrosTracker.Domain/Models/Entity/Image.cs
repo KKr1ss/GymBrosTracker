@@ -9,10 +9,9 @@ namespace GymBrosTracker.Domain.Models.Entity
         [Key]
         public int Id { get; set; }
 
-        [ForeignKey(nameof(Exercise))]
         public int ExerciseId { get; set; }
 
-        public required byte[] ImageBytes { get; set; }
+        public byte[] ImageBytes { get; set; } = null!;
 
         public DateTime CreateDate { get; set; }
 
@@ -22,6 +21,8 @@ namespace GymBrosTracker.Domain.Models.Entity
         public byte[] RowVersion { get; set; } = [];
 
         #region Foreign models
+
+        [ForeignKey(nameof(ExerciseId))]
         public Exercise? Exercise { get; set; }
         #endregion
     }

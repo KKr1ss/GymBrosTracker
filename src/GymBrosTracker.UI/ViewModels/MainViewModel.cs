@@ -1,4 +1,5 @@
-﻿using GymBrosTracker.Domain.Models.Entity;
+﻿using GymBrosTracker.Domain.Helpers.Extensions;
+using GymBrosTracker.Domain.Models.Entity;
 using GymBrosTracker.Domain.Repos.Interface;
 using GymBrosTracker.UI.ViewModels.Base;
 using System.Collections.ObjectModel;
@@ -7,13 +8,13 @@ namespace GymBrosTracker.UI.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private readonly IGymRepo _gymRepo;
+        private readonly IRepository _repo;
 
         public ObservableCollection<Exercise> Exercises { get; set; } = [];
 
-        public MainViewModel(IGymRepo gymRepo)
+        public MainViewModel(IRepository repo)
         {
-            _gymRepo = gymRepo;
+            _repo = repo;
             LoadDataAsync();
         }
 
@@ -21,7 +22,9 @@ namespace GymBrosTracker.UI.ViewModels
         {
             try
             {
-                var exercises = await _gymRepo.GetExercises();
+                await _repo.SeedData();
+
+                var exercises = await _repo.GetExercises();
                 Exercises = new ObservableCollection<Exercise>(exercises);
             }
             catch (Exception ex)

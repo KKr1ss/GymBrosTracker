@@ -8,7 +8,7 @@ namespace GymBrosTracker.Domain.Models.Entity
         [Key]
         public int Id { get; set; }
 
-        public required string Name { get; set; }
+        public string? Name { get; set; }
 
         public string? Description { get; set; }
 
@@ -20,10 +20,10 @@ namespace GymBrosTracker.Domain.Models.Entity
         public byte[] RowVersion { get; set; } = [];
 
         #region Foreign models
-        public List<MuscleGroup> MuscleGroups { get; set; } = [];
-        public List<Workout> Workouts { get; set; } = [];
+        public virtual ICollection<MuscleGroup> MuscleGroups { get; set; } = [];
+        public virtual ICollection<Workout> Workouts { get; set; } = [];
 
-        public Image? Image { get; set; }
+        public virtual Image? Image { get; set; }
         #endregion
     }
 }

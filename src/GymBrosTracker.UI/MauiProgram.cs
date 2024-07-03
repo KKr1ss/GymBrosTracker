@@ -16,7 +16,7 @@ namespace GymBrosTracker.UI
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
-            
+
             builder.RegisterServices();
             builder.RegisterViewModels();
             builder.RegisterViews();
@@ -24,7 +24,6 @@ namespace GymBrosTracker.UI
 #if DEBUG
             builder.Logging.AddDebug();
 #endif
-
             return builder.Build();
         }
 
@@ -38,7 +37,6 @@ namespace GymBrosTracker.UI
         public static MauiAppBuilder RegisterViewModels(this MauiAppBuilder builder)
         {
             builder.Services.AddSingleton<MainViewModel>();
-
             return builder;
         }
 

@@ -8,7 +8,7 @@ namespace GymBrosTracker.Domain.Models.Entity
         [Key]
         public int Id { get; set; }
 
-        public required string Name { get; set; }
+        public string? Name { get; set; }
 
         public DateTime CreateDate { get; set; }
 
@@ -18,7 +18,7 @@ namespace GymBrosTracker.Domain.Models.Entity
         public byte[] RowVersion { get; set; } = [];
         
         #region Foreign models
-        public List<Exercise> Exercises { get; set; } = [];
+        public virtual ICollection<Exercise> Exercises { get; set; } = [];
         #endregion
     }
 }

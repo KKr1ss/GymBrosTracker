@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace GymBrosTracker.Domain.Data.Interface
 {
-    public interface IAppDBContext
+    public interface IApplicationDBContext
     {
         public DbSet<Exercise> Exercises { get; set; }
         public DbSet<Image> Images { get; set; }
