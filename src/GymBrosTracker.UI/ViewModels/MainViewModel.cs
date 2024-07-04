@@ -7,7 +7,7 @@ using System.Collections.ObjectModel;
 
 namespace GymBrosTracker.UI.ViewModels
 {
-    public class MainViewModel : ViewModelBase
+    public class MainViewModel : BaseViewModel
     {
         private readonly IRepository _repo;
         private readonly ILogger<MainViewModel> _logger;
@@ -25,9 +25,10 @@ namespace GymBrosTracker.UI.ViewModels
         {
             try
             {
-                await _repo.SeedData();
-
                 var exercises = await _repo.GetExercises();
+                if (!exercises.Any())
+                    await _repo.SeedData();
+
                 Exercises = new ObservableCollection<Exercise>(exercises);
                 var muscleGroups = await _repo.GetMuscleGroups();
             }

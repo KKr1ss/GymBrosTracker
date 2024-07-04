@@ -21,11 +21,11 @@ namespace GymBrosTracker.UI
                 });
 
             builder.Logging.ClearProviders();
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.WithExceptionDetails()
-                .Enrich.FromLogContext()
-                .WriteTo.SQLite(Domain.Helpers.Constants.DBPath)
-                .CreateLogger();
+            //Log.Logger = new LoggerConfiguration()
+            //    .Enrich.WithExceptionDetails()
+            //    .Enrich.FromLogContext()
+            //    .WriteTo.SQLite(Domain.Helpers.Constants.DBPath)
+            //    .CreateLogger();
             builder.Services.AddLogging(logging =>
             {
                 logging.AddSerilog(dispose: true);
