@@ -1,0 +1,41 @@
+﻿@page "/"
+@using GymBrosTracker.Domain.Models.Entity
+@using GymBrosTracker.Domain.Repos.Interface
+@inject IRepository repository
+
+<h1>Gyakorlatok</h1>
+
+@if (exercises == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var exercise in exercises)
+            {
+                <tr>
+                    <td>@exercise.Name</td>
+                    <td>@exercise.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private Exercise[]? exercises;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(500);
+        exercises = (await repository.GetExercises()).ToArray();
+    }
+}
