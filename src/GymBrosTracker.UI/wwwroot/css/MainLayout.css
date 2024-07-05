@@ -1,0 +1,30 @@
+﻿.mainContent {
+    color: white;
+}
+
+.footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    padding: 0px 5px 10px 5px;
+
+}
+.menuContainer {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: gainsboro;
+    border-radius: 24px;
+    padding: 10px 0px 10px 0px;
+    background-color: rgba(255, 255, 255, .15);
+    backdrop-filter: blur(5px);
+    margin: 0px 2px 2px 2px;
+}
+
+.menuIcon {
+    text-align: center;
+}
+
+.menuIcon img{
+    width: 65px;
+    opacity: 80%;
+}
