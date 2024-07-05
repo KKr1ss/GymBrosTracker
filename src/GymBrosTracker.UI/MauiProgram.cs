@@ -1,7 +1,7 @@
 ﻿using GymBrosTracker.Domain;
+using GymBrosTracker.UI.Installers;
 using Microsoft.Extensions.Logging;
 using Serilog;
-using Serilog.Exceptions;
 
 namespace GymBrosTracker.UI
 {
@@ -12,32 +12,30 @@ namespace GymBrosTracker.UI
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                });
+                .ConfigureFonts(fonts => fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular"));
 
             builder.Services.AddMauiBlazorWebView();
 
-            builder.Logging.ClearProviders();
-            Log.Logger = new LoggerConfiguration()
-                .Enrich.WithExceptionDetails()
-                .Enrich.FromLogContext()
-                .WriteTo.SQLite(Domain.Helpers.Constants.DBPath)
-                .CreateLogger();
-            builder.Services.AddLogging(logging =>
+            builder.ConfigureLogging();
+
+            Log.Logger.Information("Starting application");
+            try
             {
-                logging.AddSerilog(dispose: true);
-            });
+                builder.RegisterServices();
 
-            builder.RegisterServices();
+                builder.Services.AddBlazorWebViewDeveloperTools();
+                builder.Logging.AddDebug();
 
-#if DEBUG
-            builder.Services.AddBlazorWebViewDeveloperTools();
-    		builder.Logging.AddDebug();
-#endif
-            Log.Logger.Information("Application has been started!");
-            return builder.Build();
+                var app = builder.Build();
+
+                Log.Logger.Information("Application has been started");
+                return app;
+            }
+            catch (Exception ex)
+            {
+                Log.Logger.Fatal(ex, "Application terminated unexpectedly");
+                throw;
+            }
         }
 
         public static MauiAppBuilder RegisterServices(this MauiAppBuilder builder)

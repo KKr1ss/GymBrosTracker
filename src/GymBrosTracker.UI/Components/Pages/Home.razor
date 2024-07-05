@@ -1,7 +1,10 @@
 ﻿@page "/"
 @using GymBrosTracker.Domain.Models.Entity
 @using GymBrosTracker.Domain.Repos.Interface
-@inject IRepository repository
+@using GymBrosTracker.Domain.Helpers.Extensions
+@using Microsoft.Extensions.Logging
+@inject IRepository _repository
+@inject ILogger<Home> _logger
 
 <h1>Gyakorlatok</h1>
 
@@ -36,6 +39,13 @@ else
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(500);
-        exercises = (await repository.GetExercises()).ToArray();
+        exercises = (await _repository.GetExercises()).ToArray();
+
+        #if DEBUG
+        //TODO: Make developer only
+        if (!exercises.Any())
+            await _repository.SeedData();
+        exercises = (await _repository.GetExercises()).ToArray();
+        #endif
     }
 }
