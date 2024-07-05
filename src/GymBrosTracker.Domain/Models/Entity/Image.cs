@@ -25,15 +25,5 @@ namespace GymBrosTracker.Domain.Models.Entity
         [ForeignKey(nameof(ExerciseId))]
         public Exercise? Exercise { get; set; }
         #endregion
-
-        #region DTO models 
-        public string ImageString
-        {
-            get
-            {
-                return string.Format($"data:image/bmp;base64,{Convert.ToBase64String(ImageBytes)}");
-            }
-        }
-        #endregion
     }
 }
